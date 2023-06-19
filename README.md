@@ -38,7 +38,7 @@ A Quest object will have the following fields:
 A Questline object will have the following fields:
 - ``List<Quest>`` Quest List
 - ``Integer`` Active Quest (points to which quest is currently active)
-- `` Boolean`` Completed?
+- ``Boolean`` Completed?
 Functionality Note: Only Objectives in the Active Quest can be completed at a time, and only that Quest's Rewards can be received. Completing a Quest in a Questline unlocked the next Quest.
 
  I will also include standard repository and controller items, as well as unit tests.
@@ -68,6 +68,6 @@ The following are cool ideas that would be fun to implement if I get this workin
 - Randomly generated rewards from a drop pool
 - Quest descriptions generated in RPG style using GPT-4 API
 - Create API to connect to other services and streamline quest-interaction
-    - Idea is to create and complete quest objectives 
+    - Idea is to create and complete quest objectives automatically using bluetooth-connected technology (similar to how quests are created and completed automatically in video games)
 - Connect to Google Maps API to have a visual map with pinpoints of quest objectives
     - Possibly make use of [Google Maps for SNES API](https://github.com/ciciplusplus/mapnes)
