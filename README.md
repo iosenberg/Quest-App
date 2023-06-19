@@ -17,10 +17,6 @@ Ike really wants to play The Legend of Zelda: Breath of the Wild, but unfortunat
 ### Scenario 3
 Ike struggles to keep plants alive when they're not in plain sight. So, Ike adds a new Daily Quest named "Water The Damn Plants," which becomes active once a week on Tuesday, and has the reward "Eat A Cookie".
 
-## Non-goals
-- Recreate Habitica
-    - Specifically, I do not intend to implement any of the other "gamified" features of Habitica, such as characters and items. I want a much simpler concept and UI.
-
 ## Object Specifications
 
 A Quest object will have the following fields:
@@ -61,27 +57,28 @@ Functionality Note: Only Objectives in the Active Quest can be completed at a ti
 0. Project Setup
     1. Come up with a better name
     2. Set up Spring Boot
+    3. Due: 6/23
 1. Quest and Objective Management 
     1. Make basic database schema for Quests, Questline, Objectives
     2. Set up project
     3. Create Quest and Objective objects
     4. Create Repository and Controller objects
     5. Create CRUD operations
-    6. Due: 6/22
+    6. Due: 6/29
 2. Questline Progression
     1. Create Questline Object
     2. Create CRUD operations
-    3. Due: 6/25
+    3. Due: 7/4
 3. Filtering and Sorting
     1. Create methods to filter quest based on type, status, due date, location
     2. Implement sorting for quests based on due date
-    3. Due 6/30
+    3. Due 7/10
 4. UI
     1. Design crude UI
     2. Build UI to fetch from generic database
     3. Fetch quests from backend
     4. Connect user interactions to CRUD methods
-    5. Due 7/10
+    5. Due 7/17
 
 ## Beyond MVP
 If opening the app to other people:
