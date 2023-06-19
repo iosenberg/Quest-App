@@ -24,13 +24,20 @@ Ike struggles to keep plants alive when they're not in plain sight. So, Ike adds
 ## Object Specifications
 
 A Quest object will have the following fields:
- - ID
- - Quest Name
- - Quest Description
- - Quest Objectives (nullable?)
- - Quest Reward
+ - ``Long`` ID
+ - ``String`` Quest Name
+ - ``String`` Quest Description
+ - ``List<QuestObjective>``Quest Objectives (nullable?)
+ - ``String`` Quest Reward
+ - ``Boolean`` Completed?
+
+ A Quest Objective object will have the following fiels:
+ - ``String`` Objective Name
+ - ``Boolean`` Completed?
 
  A Questline object will be a list of Quests, with one Quest marked as "Active." Only Objectives in that Quest can be completed at a time, and only that Quest's Rewards can be received. Completing a Quest in a Questline unlocked the next Quest.
+
+ I will also include standard repository and controller items, as well as unit tests.
 
 ## UI
 - Quests represented in categories, split by questline, daily
@@ -39,11 +46,16 @@ A Quest object will have the following fields:
 
 ## Milestones
 The dates on these milestones will be set once I have finished learning Spring Boot
-- Learn Spring Boot
 - Create Quest object
 - Created database to hold quest object, with associated CRUD methods
 - Create methods to Get quests with filters
-- Create simple UI to interact with Quests
+- Create simple UI to display quests
+- Add post and get functionality to UI
+
+If opening the app to other people:
+- Refactor to include ownership
+- Add and configure Spring security
+- Add sign-in feature to UI
 
 ## Beyond MVP
 The following are cool ideas that would be fun to implement if I get this working and still have a brain:
@@ -51,3 +63,5 @@ The following are cool ideas that would be fun to implement if I get this workin
 - Quest descriptions generated in RPG style using GPT-4 API
 - Create API to connect to other services and streamline quest-interaction
     - Idea is to create and complete quest objectives 
+- Connect to Google Maps API to have a visual map with pinpoints of quest objectives
+    - Possibly make use of [https://github.com/ciciplusplus/mapnes](Google Maps for SNES API)
