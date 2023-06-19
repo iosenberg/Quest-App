@@ -64,4 +64,4 @@ The following are cool ideas that would be fun to implement if I get this workin
 - Create API to connect to other services and streamline quest-interaction
     - Idea is to create and complete quest objectives 
 - Connect to Google Maps API to have a visual map with pinpoints of quest objectives
-    - Possibly make use of [https://github.com/ciciplusplus/mapnes](Google Maps for SNES API)
+    - Possibly make use of [Google Maps for SNES API](https://github.com/ciciplusplus/mapnes)
