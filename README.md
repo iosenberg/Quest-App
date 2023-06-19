@@ -27,43 +27,68 @@ A Quest object will have the following fields:
  - ``Long`` ID
  - ``String`` Quest Name
  - ``String`` Quest Description
+ - ``Enumeration: Timed, Daily, Questline, Other`` Quest Type
+ - ``Data Type?`` Location
+    - String is easiest, could enumerate Home, Library, etc. or put use actual location data
  - ``List<QuestObjective>``Quest Objectives (nullable?)
  - ``String`` Quest Reward
  - ``Boolean`` Completed?
+    - Alternatively, ``Enumeration: NotStarted, InProgress, Completed`` Quest Status?
 
  A Quest Objective object will have the following fiels:
  - ``String`` Objective Name
  - ``Boolean`` Completed?
 
 A Questline object will have the following fields:
+- ``Long`` ID
+- ``String`` Questline Name
 - ``List<Quest>`` Quest List
-- ``Integer`` Active Quest (points to which quest is currently active)
+    - More likely, ``List<Long>`` Quest List (by ID)
+- ``Long`` Active Quest ID
 - ``Boolean`` Completed?
 Functionality Note: Only Objectives in the Active Quest can be completed at a time, and only that Quest's Rewards can be received. Completing a Quest in a Questline unlocked the next Quest.
 
  I will also include standard repository and controller items, as well as unit tests.
 
 ## UI
-- Quests represented in categories, split by questline, daily
+- Layout similar to a quest log in a video game
+    - Examples: [Skyrim](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.megabearsfan.net%2Fimage.axd%2F2015%2F11%2FSkyrim-quest_log_filler_2.jpg&f=1&nofb=1&ipt=a935a9a28a0806c4ff3305dd12a8dcbc7f2f9a66a907dd70a5e85f4729acd3f3&ipo=images), [Zelda: Breath of the Wild](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Foyster.ignimgs.com%2Fmediawiki%2Fapis.ign.com%2Fthe-legend-of-zelda-hd%2Fthumb%2F1%2F18%2FAdventure_Log_Screen.jpg%2F468px-Adventure_Log_Screen.jpg&f=1&nofb=1&ipt=4a082bbb04a70add3f7315e512c4e59c82a47216aad2ab7f83ded8ed4b78312a&ipo=images), [Horizon Zero Dawn](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.vox-cdn.com%2Fthumbor%2F4IwQX1wbQ_msEqyjQsJFjQaYZL0%3D%2F0x0%3A3840x2160%2F1200x0%2Ffilters%3Afocal(0x0%3A3840x2160)%3Ano_upscale()%2Fcdn.vox-cdn.com%2Fuploads%2Fchorus_asset%2Ffile%2F8149467%2FHorizon_Zero_Dawn__20170309234355.jpg&f=1&nofb=1&ipt=145998de67904b155b035f72ca07d2a97f09ffad8ee241da54a83f2e3fd7ed09&ipo=images) [(Categories)](https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.vox-cdn.com%2Fuploads%2Fchorus_asset%2Ffile%2F8034933%2F0036_HZD.jpg&f=1&nofb=1&ipt=d6e18edd7ac17330324f679cefed3c6ff448b92e1f9dc52de39b70635486cc98&ipo=images), [Kim Keiser Design Template](https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.kimkiserdesign.com%2Fwp-content%2Fuploads%2F2014%2F07%2Fquestlog.jpg&f=1&nofb=1&ipt=de5947e2ee29400e6c72f3feb1f459e2ca3d205856b8cee632008a5d6ac0e44d&ipo=images)
+- Quests represented in categories, split by questline, timed, daily, like in HZD
+    - OR all layed out in a list, like in Skyrim
 - Option to filter based on location, sort by due date
-- Should do research on RPG Quest Logs for inspiration
 
 ## Milestones
-The dates on these milestones will be set once I have finished learning Spring Boot
-- Create Quest Objective and Quest objects
-- Created database to hold quest object, with associated CRUD methods
-- Create methods to Get quests with filters
-- Create Questline object
-- Update repository and API
-- Create simple UI to display quests
-- Add post and get functionality to UI
+0. Project Setup
+    a. Come up with a better name
+    b. Set up Spring Boot
+1. Quest and Objective Management 
+    a. Make basic database schema for Quests, Questline, Objectives
+    b. Set up project
+    b. Create Quest and Objective objects
+    c. Create Repository and Controller objects
+    d. Create CRUD operations
+    e. Due: 6/22
+2. Questline Progression
+    a. Create Questline Object
+    b. Create CRUD operations
+    c. Due: 6/25
+3. Filtering and Sorting
+    a. Create methods to filter quest based on type, status, due date, location
+    b. Implement sorting for quests based on due date
+    c. Due 6/30
+4. UI
+    a. Design crude UI
+    b. Build UI to fetch from generic database
+    c. Fetch quests from backend
+    d. Connect user interactions to CRUD methods
+    e. Due 7/10
 
+## Beyond MVP
 If opening the app to other people:
 - Refactor to include ownership
 - Add and configure Spring security
 - Add sign-in feature to UI
 
-## Beyond MVP
 The following are cool ideas that would be fun to implement if I get this working and still have a brain:
 - Randomly generated rewards from a drop pool
 - Quest descriptions generated in RPG style using GPT-4 API
