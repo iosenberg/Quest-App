@@ -88,8 +88,12 @@ If opening the app to other people:
 
 The following are cool ideas that would be fun to implement if I get this working and still have a brain:
 - Randomly generated rewards from a drop pool
+- Items and an inventory, where items are tickets to certain things
+    - E.g. Complete a task, and receive a Ticket To Play Video Games, which can be redeemed in the future for that item
+    - Known issue: Dealing with item images. Are items only text? If they have images, where do the images come from?
 - Quest descriptions generated in RPG style using GPT-4 API
 - Create API to connect to other services and streamline quest-interaction
     - Idea is to create and complete quest objectives automatically using bluetooth-connected technology (similar to how quests are created and completed automatically in video games)
 - Connect to Google Maps API to have a visual map with pinpoints of quest objectives
     - Possibly make use of [Google Maps for SNES API](https://github.com/ciciplusplus/mapnes)
+- 
