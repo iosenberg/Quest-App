@@ -1,4 +1,4 @@
-package com.iosenberg.quest;
+package com.iosenberg.quest.quest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

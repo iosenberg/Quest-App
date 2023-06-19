@@ -26,6 +26,7 @@ A Quest object will have the following fields:
  - ``Enumeration: Timed, Daily, Questline, Other`` Quest Type
  - ``Data Type?`` Location
     - String is easiest, could enumerate Home, Library, etc. or put use actual location data
+ - ``LocalDate`` Due date
  - ``List<QuestObjective>``Quest Objectives (nullable?)
  - ``String`` Quest Reward
  - ``Boolean`` Completed?
