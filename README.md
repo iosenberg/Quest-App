@@ -35,7 +35,11 @@ A Quest object will have the following fields:
  - ``String`` Objective Name
  - ``Boolean`` Completed?
 
- A Questline object will be a list of Quests, with one Quest marked as "Active." Only Objectives in that Quest can be completed at a time, and only that Quest's Rewards can be received. Completing a Quest in a Questline unlocked the next Quest.
+A Questline object will have the following fields:
+- ``List<Quest>`` Quest List
+- ``Integer`` Active Quest (points to which quest is currently active)
+- `` Boolean`` Completed?
+Functionality Note: Only Objectives in the Active Quest can be completed at a time, and only that Quest's Rewards can be received. Completing a Quest in a Questline unlocked the next Quest.
 
  I will also include standard repository and controller items, as well as unit tests.
 
@@ -46,9 +50,11 @@ A Quest object will have the following fields:
 
 ## Milestones
 The dates on these milestones will be set once I have finished learning Spring Boot
-- Create Quest object
+- Create Quest Objective and Quest objects
 - Created database to hold quest object, with associated CRUD methods
 - Create methods to Get quests with filters
+- Create Questline object
+- Update repository and API
 - Create simple UI to display quests
 - Add post and get functionality to UI
 
