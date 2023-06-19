@@ -59,29 +59,29 @@ Functionality Note: Only Objectives in the Active Quest can be completed at a ti
 
 ## Milestones
 0. Project Setup
-    a. Come up with a better name
-    b. Set up Spring Boot
+    1. Come up with a better name
+    2. Set up Spring Boot
 1. Quest and Objective Management 
-    a. Make basic database schema for Quests, Questline, Objectives
-    b. Set up project
-    b. Create Quest and Objective objects
-    c. Create Repository and Controller objects
-    d. Create CRUD operations
-    e. Due: 6/22
+    1. Make basic database schema for Quests, Questline, Objectives
+    2. Set up project
+    3. Create Quest and Objective objects
+    4. Create Repository and Controller objects
+    5. Create CRUD operations
+    6. Due: 6/22
 2. Questline Progression
-    a. Create Questline Object
-    b. Create CRUD operations
-    c. Due: 6/25
+    1. Create Questline Object
+    2. Create CRUD operations
+    3. Due: 6/25
 3. Filtering and Sorting
-    a. Create methods to filter quest based on type, status, due date, location
-    b. Implement sorting for quests based on due date
-    c. Due 6/30
+    1. Create methods to filter quest based on type, status, due date, location
+    2. Implement sorting for quests based on due date
+    3. Due 6/30
 4. UI
-    a. Design crude UI
-    b. Build UI to fetch from generic database
-    c. Fetch quests from backend
-    d. Connect user interactions to CRUD methods
-    e. Due 7/10
+    1. Design crude UI
+    2. Build UI to fetch from generic database
+    3. Fetch quests from backend
+    4. Connect user interactions to CRUD methods
+    5. Due 7/10
 
 ## Beyond MVP
 If opening the app to other people:
