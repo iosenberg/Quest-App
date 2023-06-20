@@ -9,13 +9,5 @@ public record Quest(Long id, String name, String description, TYPE type, String 
         DAILY
     }
 
-    public static class Objective {
-        String name;
-        boolean completed;
-
-        Objective(String name) {
-            this.name = name;
-            completed = false;
-        }
-    }
+    public record Objective(String name, boolean completed) {}
 }
