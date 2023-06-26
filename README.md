@@ -58,7 +58,7 @@ Functionality Note: Only Objectives in the Active Quest can be completed at a ti
 0. Project Setup
     1. Come up with a better name
     2. Set up Spring Boot
-    3. Due: 6/23
+    3. Due: 6/23 FINISHED
 1. Quest and Objective Management 
     1. Make basic database schema for Quests, Questline, Objectives
     2. Set up project
@@ -97,4 +97,3 @@ The following are cool ideas that would be fun to implement if I get this workin
     - Idea is to create and complete quest objectives automatically using bluetooth-connected technology (similar to how quests are created and completed automatically in video games)
 - Connect to Google Maps API to have a visual map with pinpoints of quest objectives
     - Possibly make use of [Google Maps for SNES API](https://github.com/ciciplusplus/mapnes)
-- 
