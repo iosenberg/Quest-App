@@ -18,7 +18,7 @@ class JsonTests {
 	private JacksonTester<Quest> json;
 
 	private Quest quest1Quest = new Quest(0L, "Quest1", "This is a quest",
-										Quest.TYPE.NONE, "Home", LocalDate.now(),
+										Quest.TYPE.NONE, "Home", LocalDate.parse("2023-06-21"),
 										new Quest.Objective[] {
 											new Quest.Objective("Objective1", false),
 											new Quest.Objective("Objective2", false)
@@ -75,9 +75,9 @@ class JsonTests {
         assertThat(quest1Json).hasJsonPathStringValue("@.dueDate");
         assertThat(quest1Json).extractingJsonPathStringValue("@.dueDate").isEqualTo("2023-06-21");
         assertThat(quest1Json).hasJsonPathArrayValue("@.objectives");
-        ObjectAssert<Object> objectiveAssert = assertThat(quest1Json).extractingJsonPathArrayValue("@.objectives").first();
-            objectiveAssert.extracting("name").isEqualTo("Objective1");
-            objectiveAssert.extracting("completed").isEqualTo(false);
+        ObjectAssert<Object> objectAssert = assertThat(quest1Json).extractingJsonPathArrayValue("@.objectives").first();
+            objectAssert.extracting("name").isEqualTo("Objective1");
+            objectAssert.extracting("completed").isEqualTo(false);
         assertThat(quest1Json).hasJsonPathStringValue("@.reward");
         assertThat(quest1Json).extractingJsonPathStringValue("@.reward").isEqualTo("A cookie!");
         assertThat(quest1Json).hasJsonPathBooleanValue("@.completed");
@@ -86,7 +86,21 @@ class JsonTests {
 
     @Test
     void questDeserializationTest() throws IOException {
-
+        //assertThat(json.parse(quest1String)).isEqualTo(quest1Quest);
+        Quest questObject = json.parseObject(quest1String);
+        assertThat(questObject.id()).isEqualTo(quest1Quest.id());
+        assertThat(questObject.name()).isEqualTo(quest1Quest.name());
+        assertThat(questObject.description()).isEqualTo(quest1Quest.description());
+        assertThat(questObject.type()).isEqualTo(quest1Quest.type());
+        assertThat(questObject.location()).isEqualTo(quest1Quest.location());
+        assertThat(questObject.dueDate()).isEqualTo(quest1Quest.dueDate());
+        Quest.Objective[] objectives = questObject.objectives();
+        for(int i = 0; i < objectives.length; i++) {
+            assertThat(objectives[i].name()).isEqualTo(quest1Quest.objectives()[i].name());
+            assertThat(objectives[i].completed()).isEqualTo(quest1Quest.objectives()[i].completed());
+        }
+        assertThat(questObject.reward()).isEqualTo(quest1Quest.reward());
+        assertThat(questObject.completed()).isEqualTo(quest1Quest.completed());
     }
 
     @Test
