@@ -27,6 +27,11 @@ class QuestApplicationTests {
     TestRestTemplate restTemplate;
 
     @Test
+    void dataBaseTest() {
+        //Errors if database is set up incorrectly
+    }
+
+    @Test
     void shouldReturnAQuestWhenDataIsSaved() {
         ResponseEntity<String> response = restTemplate.getForEntity("/quests/0", String.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
