@@ -1,6 +1,5 @@
 package com.iosenberg.quest;
 
-import org.assertj.core.api.ObjectAssert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.json.JsonTest;
@@ -14,102 +13,129 @@ import java.time.LocalDate;
 
 @JsonTest
 class JsonTests {
+    @Autowired
+    private JacksonTester<Objective> oJson;
+
 	@Autowired
-	private JacksonTester<Quest> json;
+	private JacksonTester<Quest> qJson;
 
-	private Quest quest1Quest = new Quest(0L, "Quest1", "This is a quest",
-										Quest.TYPE.NONE, "Home", LocalDate.parse("2023-06-21"),
-										new Quest.Objective[] {
-											new Quest.Objective("Objective1", false),
-											new Quest.Objective("Objective2", false)
-										},
-										"A cookie!", false);
-	private Quest quest2Quest = new Quest(1L, "Quest2", "This is NOT a quest",
-										Quest.TYPE.TIMED, "Library", LocalDate.ofEpochDay(1687219200),
-										new Quest.Objective[] {}, "A gun.", false);
+    @Autowired
+    private JacksonTester<Questline> qlJson;
 
-    private String quest1String = """
+    private Objective objective = new Objective(0L, 0L, (byte)0, "Objective", true);
+
+    private String objectiveString = """
             {
                 "id":0,
-                "name":"Quest1",
+                "questId":0,
+                "order":0,
+                "name":"Objective",
+                "completed":true
+            }
+            """;
+
+	private Quest quest = new Quest(0L, 0L, "Quest", "This is a quest",
+										Quest.RECURRENCE.NONE, "Home", LocalDate.parse("2023-06-21"),
+										"A cookie!", false);
+
+    private String questString = """
+            {
+                "id":0,
+                "questlineId":0,
+                "name":"Quest",
                 "description":"This is a quest",
-                "type":"NONE",
+                "recurrence":"NONE",
                 "location":"Home",
                 "dueDate":"2023-06-21",
-                "objectives":[
-                    {"name":"Objective1","completed":false},
-                    {"name":"Objective2","completed":false}
-                    ],
                 "reward":"A cookie!",
                 "completed":false
             }
             """;
 
-    private String quest2String = """
+    private Questline questline = new Questline(0L, "Questline");
+
+    private String questlineString = """
             {
-                "id":1,
-                "name":"Quest2",
-                "description":"This is not a quest",
-                "type":"TIMED",
-                "location":"Library",
-                "dueDate":"2023-06-21",
-                "objectives":[],
-                "reward":"A gun.",
-                "completed":false
+                "id":0,
+                "name":"Questline"
             }
             """;
 
     @Test
+    void objectiveSerializationTest() throws IOException {
+        JsonContent<Objective> objectiveJson = oJson.write(objective);
+        assertThat(objectiveJson).hasJsonPathNumberValue("@.id");
+        assertThat(objectiveJson).extractingJsonPathNumberValue("@.id").isEqualTo(0);
+        assertThat(objectiveJson).hasJsonPathNumberValue("@.questId");
+        assertThat(objectiveJson).extractingJsonPathNumberValue("@.questId").isEqualTo(0);
+        assertThat(objectiveJson).hasJsonPathNumberValue("@.ordering");
+        assertThat(objectiveJson).extractingJsonPathNumberValue("@.ordering").isEqualTo(0);
+        assertThat(objectiveJson).hasJsonPathStringValue("@.name");
+        assertThat(objectiveJson).extractingJsonPathStringValue("@.name").isEqualTo("Objective");
+        assertThat(objectiveJson).hasJsonPathBooleanValue("@.completed");
+        assertThat(objectiveJson).extractingJsonPathBooleanValue("@.completed").isEqualTo(true);
+    }
+
+    @Test
+    void objectiveDeserializationTest() throws IOException {
+        Objective objectiveObject = oJson.parseObject(objectiveString);
+        assertThat(objectiveObject.id()).isEqualTo(objective.id());
+        assertThat(objectiveObject.questId()).isEqualTo(objective.questId());
+        assertThat(objectiveObject.ordering()).isEqualTo(objective.ordering());
+        assertThat(objectiveObject.name()).isEqualTo(objective.name());
+        assertThat(objectiveObject.completed()).isEqualTo(objective.completed());
+    }
+
+    @Test
     void questSerializationTest() throws IOException {
-        JsonContent<Quest> quest1Json = json.write(quest1Quest);
-        assertThat(quest1Json).hasJsonPathNumberValue("@.id");
-        assertThat(quest1Json).extractingJsonPathNumberValue("@.id").isEqualTo(0);
-        assertThat(quest1Json).hasJsonPathStringValue("@.name");
-        assertThat(quest1Json).extractingJsonPathStringValue("@.name").isEqualTo("Quest1");
-        assertThat(quest1Json).hasJsonPathStringValue("@.description");
-        assertThat(quest1Json).extractingJsonPathStringValue("@.description").isEqualTo("This is a quest");
-        assertThat(quest1Json).hasJsonPathStringValue("@.type");
-        assertThat(quest1Json).extractingJsonPathStringValue("@.type").isEqualTo("NONE");
-        assertThat(quest1Json).hasJsonPathStringValue("@.location");
-        assertThat(quest1Json).extractingJsonPathStringValue("@.location").isEqualTo("Home");
-        assertThat(quest1Json).hasJsonPathStringValue("@.dueDate");
-        assertThat(quest1Json).extractingJsonPathStringValue("@.dueDate").isEqualTo("2023-06-21");
-        assertThat(quest1Json).hasJsonPathArrayValue("@.objectives");
-        ObjectAssert<Object> objectAssert = assertThat(quest1Json).extractingJsonPathArrayValue("@.objectives").first();
-            objectAssert.extracting("name").isEqualTo("Objective1");
-            objectAssert.extracting("completed").isEqualTo(false);
-        assertThat(quest1Json).hasJsonPathStringValue("@.reward");
-        assertThat(quest1Json).extractingJsonPathStringValue("@.reward").isEqualTo("A cookie!");
-        assertThat(quest1Json).hasJsonPathBooleanValue("@.completed");
-        assertThat(quest1Json).extractingJsonPathBooleanValue("@.completed").isEqualTo(false);
+        JsonContent<Quest> questJson = qJson.write(quest);
+        assertThat(questJson).hasJsonPathNumberValue("@.id");
+        assertThat(questJson).extractingJsonPathNumberValue("@.id").isEqualTo(0);
+        assertThat(questJson).hasJsonPathNumberValue("@.questlineId");
+        assertThat(questJson).extractingJsonPathNumberValue("@.questlineId").isEqualTo(0);
+        assertThat(questJson).hasJsonPathStringValue("@.name");
+        assertThat(questJson).extractingJsonPathStringValue("@.name").isEqualTo("Quest");
+        assertThat(questJson).hasJsonPathStringValue("@.description");
+        assertThat(questJson).extractingJsonPathStringValue("@.description").isEqualTo("This is a quest");
+        assertThat(questJson).hasJsonPathStringValue("@.recurrence");
+        assertThat(questJson).extractingJsonPathStringValue("@.recurrence").isEqualTo("NONE");
+        assertThat(questJson).hasJsonPathStringValue("@.location");
+        assertThat(questJson).extractingJsonPathStringValue("@.location").isEqualTo("Home");
+        assertThat(questJson).hasJsonPathStringValue("@.dueDate");
+        assertThat(questJson).extractingJsonPathStringValue("@.dueDate").isEqualTo("2023-06-21");
+        assertThat(questJson).hasJsonPathStringValue("@.reward");
+        assertThat(questJson).extractingJsonPathStringValue("@.reward").isEqualTo("A cookie!");
+        assertThat(questJson).hasJsonPathBooleanValue("@.completed");
+        assertThat(questJson).extractingJsonPathBooleanValue("@.completed").isEqualTo(false);
     }
 
     @Test
     void questDeserializationTest() throws IOException {
-        //assertThat(json.parse(quest1String)).isEqualTo(quest1Quest);
-        Quest questObject = json.parseObject(quest1String);
-        assertThat(questObject.id()).isEqualTo(quest1Quest.id());
-        assertThat(questObject.name()).isEqualTo(quest1Quest.name());
-        assertThat(questObject.description()).isEqualTo(quest1Quest.description());
-        assertThat(questObject.type()).isEqualTo(quest1Quest.type());
-        assertThat(questObject.location()).isEqualTo(quest1Quest.location());
-        assertThat(questObject.dueDate()).isEqualTo(quest1Quest.dueDate());
-        Quest.Objective[] objectives = questObject.objectives();
-        for(int i = 0; i < objectives.length; i++) {
-            assertThat(objectives[i].name()).isEqualTo(quest1Quest.objectives()[i].name());
-            assertThat(objectives[i].completed()).isEqualTo(quest1Quest.objectives()[i].completed());
-        }
-        assertThat(questObject.reward()).isEqualTo(quest1Quest.reward());
-        assertThat(questObject.completed()).isEqualTo(quest1Quest.completed());
+        Quest questObject = qJson.parseObject(questString);
+        assertThat(questObject.id()).isEqualTo(quest.id());
+        assertThat(questObject.questlineId()).isEqualTo(quest.questlineId());
+        assertThat(questObject.name()).isEqualTo(quest.name());
+        assertThat(questObject.description()).isEqualTo(quest.description());
+        assertThat(questObject.recurrence()).isEqualTo(quest.recurrence());
+        assertThat(questObject.location()).isEqualTo(quest.location());
+        assertThat(questObject.dueDate()).isEqualTo(quest.dueDate());
+        assertThat(questObject.reward()).isEqualTo(quest.reward());
+        assertThat(questObject.completed()).isEqualTo(quest.completed());
     }
 
     @Test
     void questlineSerializationTest() throws IOException {
-
+        JsonContent<Questline> questlineJson = qlJson.write(questline);
+        assertThat(questlineJson).hasJsonPathNumberValue("@.id");
+        assertThat(questlineJson).extractingJsonPathNumberValue("@.id").isEqualTo(0);
+        assertThat(questlineJson).hasJsonPathStringValue("@.name");
+        assertThat(questlineJson).extractingJsonPathStringValue("@.name").isEqualTo("Questline");
     }
 
     @Test
     void questlineDeserializationTest() throws IOException {
-
+        Questline questlineObject = qlJson.parseObject(questlineString);
+        assertThat(questlineObject.id()).isEqualTo(questline.id());
+        assertThat(questlineObject.name()).isEqualTo(questline.name());
     }
 }

@@ -2,12 +2,14 @@ package com.iosenberg.quest;
 
 import java.time.LocalDate;
 
-public record Quest(Long id, String name, String description, TYPE type, String location, LocalDate dueDate, Objective[] objectives, String reward, boolean completed) {
-    public enum TYPE {
-        NONE,
-        TIMED,
-        DAILY
-    }
+import org.springframework.data.annotation.Id;
 
-    public record Objective(String name, boolean completed) {}
+public record Quest(@Id Long id, Long questlineId, String name, String description, RECURRENCE recurrence, String location, LocalDate dueDate, String reward, boolean completed) {
+    public enum RECURRENCE {
+        NONE,
+        DAILY,
+        WEEKLY,
+        MONTHLY,
+        YEARLY
+    }
 }
