@@ -9,7 +9,7 @@ import org.springframework.boot.test.json.JsonContent;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.IOException;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @JsonTest
 class JsonTests {
@@ -35,7 +35,7 @@ class JsonTests {
             """;
 
 	private Quest quest = new Quest(0L, 0L, "Quest", "This is a quest",
-										Quest.RECURRENCE.NONE, "Home", LocalDate.parse("2023-06-21"),
+										Quest.RECURRENCE.NONE, "Home", new Date(1687320000000L),
 										"A cookie!", false);
 
     private String questString = """
@@ -46,7 +46,7 @@ class JsonTests {
                 "description":"This is a quest",
                 "recurrence":"NONE",
                 "location":"Home",
-                "dueDate":"2023-06-21",
+                "dueDate":1687320000000,
                 "reward":"A cookie!",
                 "completed":false
             }

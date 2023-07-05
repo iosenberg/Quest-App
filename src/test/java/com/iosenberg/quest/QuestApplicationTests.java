@@ -18,7 +18,7 @@ import net.minidev.json.JSONArray;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class QuestApplicationTests {
@@ -40,11 +40,11 @@ class QuestApplicationTests {
         Number id = documentContext.read("$.id");
         assertThat(id).isEqualTo(0);
 
-        Double name = documentContext.read("$.name");
+        String name = documentContext.read("$.name");
         assertThat(name).isEqualTo("Quest1");
     }
 
-    // @Test
+    @Test
     void shouldNotReturnAQuestWithAnUnknownId() {
         ResponseEntity<String> response = restTemplate.getForEntity("/quests/1000", String.class);
 
@@ -52,20 +52,21 @@ class QuestApplicationTests {
         assertThat(response.getBody()).isBlank();
     }
 
-    // @Test
+    @Test
     @DirtiesContext
     void shouldCreateANewQuest() {
-	Quest newQuest = new Quest(1L, null, "Quest2", "This is NOT a quest", Quest.RECURRENCE.NONE, "Library", LocalDate.ofEpochDay(1687219200), "A gun.", false);
+	    Quest newQuest = new Quest(null, null, "Quest2", "This is NOT a quest", Quest.RECURRENCE.NONE, "Library", new Date(1687219200), "A gun.", false);
         ResponseEntity<Void> createResponse = restTemplate.postForEntity("/quests", newQuest, Void.class);
         assertThat(createResponse.getStatusCode()).isEqualTo(HttpStatus.CREATED);
 
         URI locationOfNewQuest = createResponse.getHeaders().getLocation();
+        System.out.println("URI = " + locationOfNewQuest);
         ResponseEntity<String> getResponse = restTemplate.getForEntity(locationOfNewQuest, String.class);
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
         Number id = documentContext.read("$.id");
-        Double name = documentContext.read("$.name");
+        String name = documentContext.read("$.name");
 
         assertThat(id).isNotNull();
         assertThat(name).isEqualTo("Quest2");
@@ -106,7 +107,7 @@ class QuestApplicationTests {
         JSONArray read = documentContext.read("$[*]");
         assertThat(read.size()).isEqualTo(1);
 
-        double name = documentContext.read("$[0].name");
+        String name = documentContext.read("$[0].name");
         assertThat(name).isEqualTo("Quest1");
     }
 
@@ -126,7 +127,7 @@ class QuestApplicationTests {
     // @Test
     @DirtiesContext
     void shouldUpdateAnExistingQuest() {
-		Quest questUpdate = new Quest(0L, 0L, "New Quest Name!", "This is a quest", Quest.RECURRENCE.NONE, "Home", LocalDate.parse("2023-06-21"), "A cookie!", false);
+		Quest questUpdate = new Quest(0L, 0L, "New Quest Name!", "This is a quest", Quest.RECURRENCE.NONE, "Home", new Date(1686009600), "A cookie!", false);
         HttpEntity<Quest> request = new HttpEntity<>(questUpdate);
         ResponseEntity<Void> response = restTemplate.exchange("/quests/0", HttpMethod.PUT, request, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
@@ -135,14 +136,14 @@ class QuestApplicationTests {
         assertThat(getResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         DocumentContext documentContext = JsonPath.parse(getResponse.getBody());
         Number id = documentContext.read("$.id");
-        Double name = documentContext.read("$.name");
+        String name = documentContext.read("$.name");
         assertThat(id).isEqualTo(0);
         assertThat(name).isEqualTo("New Quest Name!");
     }
 
     // @Test
     void shouldNotUpdateAQuestThatDoesNotExist() {
-		Quest unknownQuest = new Quest(4L, 0L, "New quest name!", "This is a quest", Quest.RECURRENCE.NONE, "Home", LocalDate.parse("2023-06-21"), "A cookie!", false);
+		Quest unknownQuest = new Quest(4L, 0L, "New quest name!", "This is a quest", Quest.RECURRENCE.NONE, "Home", new Date(1686009600), "A cookie!", false);
         HttpEntity<Quest> request = new HttpEntity<>(unknownQuest);
         ResponseEntity<Void> response = restTemplate.exchange("/quests/4", HttpMethod.PUT, request, Void.class);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
